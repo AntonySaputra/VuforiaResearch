@@ -45,6 +45,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         pingUI.text = "Cloud Region: " + PhotonNetwork.CloudRegion +
                    "\n Ping: " + PhotonNetwork.GetPing().ToString() + "ms";
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     [PunRPC]
@@ -78,8 +82,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         
         //initialize the player
         PlayerController playerScript = playerObject.GetComponent<PlayerController>();
-        playerScript.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);
+        playerScript.animator = playerObject.GetComponent<Animator>();
         playerObject.transform.SetParent(imageTarget.transform);
+        playerScript.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);
+       
         //playerObject.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
 
         GameObject playerObject2 = PhotonNetwork.Instantiate(playerPrefabLocation, spawnPoints[index[1]].position, Quaternion.identity);
@@ -88,8 +94,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         //initialize the player
         PlayerController playerScript2 = playerObject2.GetComponent<PlayerController>();
-        playerScript2.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);
+        playerScript2.animator = playerObject2.GetComponent<Animator>();
         playerObject2.transform.SetParent(imageTarget.transform);
+        playerScript2.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);
+        
         //playerObject2.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
 
 
@@ -134,6 +142,25 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
 
         return false;
+    }
+
+    public List<GameObject> GetAllUnits(string coalition)
+    {
+        List<GameObject> unitsObject = new List<GameObject>();
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (GameObject.Find("Player " + i))
+            {
+                GameObject unit = GameObject.Find("Player " + i);
+                PlayerController player = unit.gameObject.GetComponent<PlayerController>();
+                if (player.coalition == coalition)
+                    unitsObject.Add(unit);
+            }
+
+        }
+
+        return unitsObject;
     }
 
     public PlayerController GetPlayer (int playerID)

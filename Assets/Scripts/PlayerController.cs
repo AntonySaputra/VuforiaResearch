@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public TextMeshProUGUI playerNickname;
     private Transform canvas;
     private Transform arrow;
+    public Animator animator;
    
 
 
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         photonPlayer = player;
         id = player.ActorNumber;
         coalition = player.NickName;
-
+        
 
         GameManager.instance.players[id - 1] = this;
 
@@ -47,16 +48,33 @@ public class PlayerController : MonoBehaviourPunCallbacks
         playerNickname.text = photonPlayer.NickName;
         canvas = transform.Find("Canvas");
         arrow = canvas.Find("Arrow");
+        //animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
         arrow.gameObject.SetActive(selected);
+        if(selected == true)
+        {
+            GetComponent<Animator>().SetBool("IsShooting", false);
+        }
     }
 
     public void shoot()
     {
-        GameManager.instance.photonView.RPC("DestroyTarget", RpcTarget.All, GameManager.instance.selectedTarget.transform.name);
+        //if(GetComponent<Animator>() != null && GetComponent<Animator>().isActiveAndEnabled)
+        // {
+         
+        if(selected)
+        {
+            selected = false;
+            print(coalition + ": " + transform.name + " shoot");
+            GetComponent<Animator>().SetBool("IsShooting", true);
+            GameManager.instance.photonView.RPC("DestroyTarget", RpcTarget.All, GameManager.instance.selectedTarget.transform.name);
+        }
+        
+      //  }
+        
     }
 
     public void initiateRespawnTarget()

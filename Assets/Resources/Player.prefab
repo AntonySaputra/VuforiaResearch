@@ -2104,6 +2104,7 @@ GameObject:
   - component: {fileID: 7326950034815043143}
   - component: {fileID: 7326950034815043141}
   - component: {fileID: 7326950034815043147}
+  - component: {fileID: 5505762049933800047}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2193,6 +2194,7 @@ MonoBehaviour:
   selected: 0
   rig: {fileID: 4007836377123196219}
   playerNickname: {fileID: 873913149235763201}
+  animator: {fileID: 0}
 --- !u!114 &7326950034815043141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2211,6 +2213,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
+  - {fileID: 5505762049933800047}
   - {fileID: 7326950034815043147}
   viewIdField: 0
   InstantiationId: 0
@@ -2230,6 +2233,27 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
+--- !u!114 &5505762049933800047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7326950034815043144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 1
+    Name: IsShooting
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!1 &7326950034815043146
 GameObject:
   m_ObjectHideFlags: 0

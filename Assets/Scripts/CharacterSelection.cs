@@ -15,7 +15,7 @@ public class CharacterSelection : MonoBehaviour
     }
     void Update()
     {
-        units = GetAllUnits(PhotonNetwork.NickName);
+        units = GameManager.instance.GetAllUnits(PhotonNetwork.NickName);
         if (Input.GetMouseButtonDown(0))
         {
             
@@ -48,24 +48,7 @@ public class CharacterSelection : MonoBehaviour
         }
     }
 
-    List<GameObject> GetAllUnits(string coalition)
-    {
-        List<GameObject> unitsObject = new List<GameObject>();
-
-        for (int i = 0; i < 4; i++)
-        {
-            if(GameObject.Find("Player " + i))
-            {
-                GameObject unit = GameObject.Find("Player " + i);
-                PlayerController player = unit.gameObject.GetComponent<PlayerController>();
-                if (player.coalition == coalition)
-                    unitsObject.Add(unit);
-            }
-           
-        }
-
-        return unitsObject;
-    }
+    
 
     void UnitClearSelection()
     {
